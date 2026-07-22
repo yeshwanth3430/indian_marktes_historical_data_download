@@ -17,9 +17,27 @@ import os
 import urllib.parse
 
 from breeze_connect import BreezeConnect
-from dotenv import load_dotenv
 
-load_dotenv()
+# Always resolve .env next to this file, so the scripts work from any cwd.
+_ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+
+try:
+    from dotenv import load_dotenv
+except ImportError:  # python-dotenv is optional — fall back to a tiny reader
+    def load_dotenv(dotenv_path: str, **_kwargs) -> bool:
+        if not os.path.exists(dotenv_path):
+            return False
+        with open(dotenv_path) as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                # real environment variables win over .env
+                os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+        return True
+
+load_dotenv(_ENV_PATH)
 
 API_KEY = os.environ.get("BREEZE_API_KEY", "")
 API_SECRET = os.environ.get("BREEZE_API_SECRET", "")

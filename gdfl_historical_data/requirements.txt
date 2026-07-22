@@ -1,0 +1,10 @@
+# GDFL Nimble websocket feed
+websockets>=12.0
+
+# Data handling / storage
+pandas>=2.0
+duckdb>=1.0
+
+# Loads credentials from .env (optional — gdfl_config falls back to a built-in
+# reader, so real environment variables work without this installed)
+python-dotenv>=1.0
