@@ -40,7 +40,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 HERE = os.path.dirname(os.path.abspath(__file__))
 MASTER_CSV = os.path.join(HERE, "gdfl_master_nse.csv")
 
-# Trading day to download. Defaults to today; override with:  python gdfl_daily_download.py 2026-07-06
+# Trading day to download. Defaults to today; override with:  python nifty_daily_tick.py 2026-07-06
 RUN_DATE = datetime.now(IST).date()
 
 SESSION_START = (9, 15, 0)      # 09:15:00 IST

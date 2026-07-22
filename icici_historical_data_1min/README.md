@@ -16,8 +16,8 @@ For each trading day in a date range, the scripts:
 
 | Script | Index | Spot | Options | Strike range | Interval | Output DB |
 |---|---|---|---|---|---|---|
-| [nifty_icici_duck.py](nifty_icici_duck.py) | NIFTY 50 | `NIFTY` / NSE | `NIFTY` / NFO | high +600, low −600 | 50 | `nifty_data.duckdb` |
-| [sensex_icici_duckdb.py](sensex_icici_duckdb.py) | SENSEX | `BSESEN` / BSE | `BSESEN` / BFO | high +1500, low −1500 | 100 | `sensex_data.duckdb` |
+| [nifty_icici_1min.py](nifty_icici_1min.py) | NIFTY 50 | `NIFTY` / NSE | `NIFTY` / NFO | high +600, low −600 | 50 | `nifty_data.duckdb` |
+| [sensex_icici_1min.py](sensex_icici_1min.py) | SENSEX | `BSESEN` / BSE | `BSESEN` / BFO | high +1500, low −1500 | 100 | `sensex_data.duckdb` |
 
 [icici_config.py](icici_config.py) holds the shared credential loading and session setup.
 
@@ -66,9 +66,9 @@ Breeze session    : ********
 ## Usage
 
 ```bash
-python nifty_icici_duck.py
+python nifty_icici_1min.py
 # or
-python sensex_icici_duckdb.py
+python sensex_icici_1min.py
 ```
 
 Each script prompts for a date range:

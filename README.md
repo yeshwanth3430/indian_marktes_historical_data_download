@@ -7,8 +7,8 @@ and data-vendor APIs into local DuckDB databases and CSVs for backtesting.
 
 | Folder | Source | Data |
 |---|---|---|
-| [icici_historical_data/](icici_historical_data/) | ICICI Direct Breeze API | 1-minute NIFTY & SENSEX spot and options bars → DuckDB |
-| [gdfl_historical_data/](gdfl_historical_data/) | GDFL Nimble websocket feed | Full-session tick data → CSV, and 1-minute bars → DuckDB |
+| [icici_historical_data_1min/](icici_historical_data_1min/) | ICICI Direct Breeze API | 1-minute NIFTY & SENSEX spot and options bars → DuckDB |
+| [gdfl_historical_data_1min/](gdfl_historical_data_1min/) | GDFL Nimble websocket feed | Full-session tick data → CSV, and 1-minute bars → DuckDB |
 
 Each folder is self-contained — its own README, `requirements.txt` and `.env`.
 Start with the folder README for setup and usage.
@@ -21,8 +21,8 @@ No API keys live in this repo. Each source folder ships a `.env.example` — cop
 
 | Folder | Variables |
 |---|---|
-| `icici_historical_data/` | `BREEZE_API_KEY`, `BREEZE_API_SECRET`, `BREEZE_SESSION_TOKEN` |
-| `gdfl_historical_data/` | `GDFL_NSE_API_KEY`, `GDFL_BSE_API_KEY` |
+| `icici_historical_data_1min/` | `BREEZE_API_KEY`, `BREEZE_API_SECRET`, `BREEZE_SESSION_TOKEN` |
+| `gdfl_historical_data_1min/` | `GDFL_NSE_API_KEY`, `GDFL_BSE_API_KEY` |
 
 Both config modules load `.env` from their own directory, so scripts run correctly
 from any working directory, and they log masked values only — a credential is never

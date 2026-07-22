@@ -50,8 +50,8 @@ python download_bse_master.py     # -> gdfl_master_bse.csv
 ### Tick data (one CSV per contract)
 
 ```bash
-python gdfl_daily_download.py [YYYY-MM-DD]        # NIFTY / NFO
-python gdfl_daily_download_bse.py [YYYY-MM-DD]    # SENSEX / BFO
+python nifty_daily_tick.py [YYYY-MM-DD]     # NIFTY / NFO
+python sensex_daily_tick.py [YYYY-MM-DD]    # SENSEX / BFO
 ```
 
 Defaults to today. Pulls the full session (09:15–15:30 IST) for every futures and
@@ -79,10 +79,10 @@ Contracts with no ticks produce no file, so only contracts that actually traded 
 
 | Script | Index | Expiries | Strike range | Output |
 |---|---|---|---|---|
-| [nifty_near_week_duckdb.py](nifty_near_week_duckdb.py) | NIFTY | nearest weekly | — | `nifty_nearest_week.duckdb` |
-| [sensex_gdfl_newar week_duck_db.py](sensex_gdfl_newar%20week_duck_db.py) | SENSEX | nearest weekly | — | `sensex_data_nearest_week_gdfl.duckdb` |
-| [nifty_all_expiry_duckdb.py](nifty_all_expiry_duckdb.py) | NIFTY | all available | spot high/low ±1000 | `nifty_all_expiry_gdfl.duckdb` |
-| [sensex_all_expiry_duckdb.py](sensex_all_expiry_duckdb.py) | SENSEX | all available | spot high/low ±3000 | `sensex_all_expiry_gdfl.duckdb` |
+| [nifty_near_week_1min.py](nifty_near_week_1min.py) | NIFTY | nearest weekly | — | `nifty_nearest_week.duckdb` |
+| [sensex_near_week_1min.py](sensex_near_week_1min.py) | SENSEX | nearest weekly | — | `sensex_data_nearest_week_gdfl.duckdb` |
+| [nifty_all_expiry_1min.py](nifty_all_expiry_1min.py) | NIFTY | all available | spot high/low ±1000 | `nifty_all_expiry_gdfl.duckdb` |
+| [sensex_all_expiry_1min.py](sensex_all_expiry_1min.py) | SENSEX | all available | spot high/low ±3000 | `sensex_all_expiry_gdfl.duckdb` |
 
 Each writes two tables, `spot_data` and `options_data`. The strike range is computed
 after spot data is fetched, so it tracks the day's actual high and low.
@@ -104,6 +104,24 @@ rather than writing anything:
 - [probe_gethistory.py](probe_gethistory.py) — dump the raw `GetHistory` reply for one contract.
 - [probe_tick_coverage.py](probe_tick_coverage.py) — check which part of a session actually has ticks.
 
+## File naming
+
+Scripts are named `<index>_<scope>_<granularity>.py`, so the data a script produces
+is readable off the filename:
+
+| Old name | New name |
+|---|---|
+| `gdfl_daily_download.py` | `nifty_daily_tick.py` |
+| `gdfl_daily_download_bse.py` | `sensex_daily_tick.py` |
+| `nifty_near_week_duckdb.py` | `nifty_near_week_1min.py` |
+| `sensex_gdfl_newar week_duck_db.py` | `sensex_near_week_1min.py` |
+| `nifty_all_expiry_duckdb.py` | `nifty_all_expiry_1min.py` |
+| `sensex_all_expiry_duckdb.py` | `sensex_all_expiry_1min.py` |
+
+Update any cron entries, shell aliases or shortcuts that referenced the old names.
+The renames also fixed a typo and a space in the SENSEX near-week filename, which
+previously had to be quoted on the command line.
+
 ## Notes
 
 - `.env`, `*.duckdb` and `*.csv` are git-ignored — that covers the generated master
@@ -111,6 +129,6 @@ rather than writing anything:
 - `gdfl_master_nse.csv` header labels are offset from the data: the underlying index
   is in the `Product` column and `FUTIDX`/`OPTIDX` in the `Name` column. The loaders
   account for this.
-- One filename carries a typo from the original — `sensex_gdfl_newar week_duck_db.py`
-  ("newar", plus a space). Left as-is so existing shortcuts and cron entries keep
-  working; the space means it must be quoted when run.
+- The folder is named `..._1min` for consistency with the ICICI folder, but it also
+  holds the tick downloaders above — `_1min` describes the DuckDB scripts, not
+  everything here.
