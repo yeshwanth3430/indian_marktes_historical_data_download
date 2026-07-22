@@ -35,7 +35,7 @@ Then create your `.env`:
 cp .env.example .env
 ```
 
-Fill in three values:
+Replace the `******` placeholders with three real values:
 
 | Variable | Where to get it |
 |---|---|
@@ -45,14 +45,23 @@ Fill in three values:
 
 ### Refreshing the session token
 
-The session token expires every day. On startup each script prints a login URL:
+The session token expires every day. To mint a new one, print the login URL:
 
-```
-https://api.icicidirect.com/apiuser/login?api_key=...
+```bash
+python -c "import icici_config; print(icici_config.login_url())"
 ```
 
 Open it, log in, and the browser is redirected to a URL containing `API_Session=12345678`.
 Copy that value into `BREEZE_SESSION_TOKEN` in `.env`.
+
+That URL embeds your API key, which is why it is printed on demand rather than on
+every run — don't paste it into a shared log. Normal startup only ever shows masked
+credentials:
+
+```
+Breeze API key    : abcd******wxyz
+Breeze session    : ********
+```
 
 ## Usage
 
