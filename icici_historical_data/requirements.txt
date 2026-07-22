@@ -1,0 +1,10 @@
+# ICICI Direct Breeze API SDK
+breeze-connect>=1.0.62
+
+# Data handling / storage
+pandas>=2.0
+duckdb>=1.0
+pytz>=2024.1
+
+# Loads credentials from .env
+python-dotenv>=1.0
